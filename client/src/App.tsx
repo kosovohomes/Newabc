@@ -4,10 +4,13 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AdminProvider } from "./contexts/AdminContext";
 import Home from "./pages/Home";
 import NamesCarouselPage from "./pages/NamesCarouselPage";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
+import AdminDashboard from "./pages/AdminDashboard";
+import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 import "./lib/i18n";
 import { useVisitorTracker } from "./hooks/useVisitorTracker";
 
@@ -26,6 +29,11 @@ function Router() {
           <Route path={"/signup"}>
             <Auth mode="signup" />
           </Route>
+          <Route path={"/admin"}>
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          </Route>
           <Route path={"/404"} component={NotFound} />
           {/* Final fallback route */}
           <Route component={NotFound} />
@@ -43,15 +51,17 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <AdminProvider>
+        <ThemeProvider
+          defaultTheme="light"
+          // switchable
+        >
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </AdminProvider>
     </ErrorBoundary>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { auth } from "@/lib/firebase";
+import { userService } from "@/lib/firebaseService";
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword 
@@ -26,7 +27,9 @@ export default function Auth({ mode }: { mode: 'login' | 'signup' }) {
         await signInWithEmailAndPassword(auth, email, password);
         toast.success("Logged in successfully");
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // Create user profile in Firestore
+        await userService.create(userCredential.user.uid, email, "user");
         toast.success("Account created successfully");
       }
       setLocation("/");
