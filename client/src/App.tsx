@@ -10,12 +10,14 @@ import NamesCarouselPage from "./pages/NamesCarouselPage";
 import Auth from "./pages/Auth";
 import Header from "./components/Header";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminShowcase from "./pages/AdminShowcase";
 import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 import "./lib/i18n";
 import { useVisitorTracker } from "./hooks/useVisitorTracker";
 
 function Router() {
   useVisitorTracker();
+  
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -34,6 +36,7 @@ function Router() {
               <AdminDashboard />
             </ProtectedAdminRoute>
           </Route>
+          <Route path={"/admin-showcase"} component={AdminShowcase} />
           <Route path={"/404"} component={NotFound} />
           {/* Final fallback route */}
           <Route component={NotFound} />

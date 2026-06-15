@@ -39,6 +39,7 @@ export default function Header() {
   const NavLinks = () => (
     <>
       <Link href="/">{t('nav.home')}</Link>
+      <Link href="/admin-showcase">Admin Dashboard</Link>
       <Link href="/about">{t('nav.about')}</Link>
       <Link href="/contact">{t('nav.contact')}</Link>
     </>
@@ -87,6 +88,9 @@ export default function Header() {
                   <DropdownMenuItem className="text-xs text-muted-foreground">
                     {user.email}
                   </DropdownMenuItem>
+                  <Link href="/admin-showcase">
+                    <DropdownMenuItem>Admin Showcase</DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     {t('nav.logout')}
@@ -119,10 +123,16 @@ export default function Header() {
                 {user ? (
                   <>
                     <span className="text-sm font-medium">{user.email}</span>
+                    <Link href="/admin-showcase">
+                      <Button variant="outline" className="w-full">Admin Showcase</Button>
+                    </Link>
                     <Button variant="outline" onClick={handleLogout}>{t('nav.logout')}</Button>
                   </>
                 ) : (
                   <>
+                    <Link href="/admin-showcase">
+                      <Button variant="outline" className="w-full">Admin Showcase</Button>
+                    </Link>
                     <Link href="/login">
                       <Button variant="outline" className="w-full">{t('nav.login')}</Button>
                     </Link>
